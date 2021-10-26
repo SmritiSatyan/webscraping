@@ -1,0 +1,768 @@
+import re
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.feature_extraction.text import TfidfTransformer
+import numpy as np
+import pandas as pd
+
+
+#domain
+#CREATING DOMAIN SPECIFIC KEYWORDS ends at domain_specific_keywords
+domain_sentences = list()
+with open("C:\\Users\\satyanarayana.smriti\\Desktop\\RFP_Marketing\\For_TF-IDF.txt") as file:
+    for line in file:
+        for l in re.split(r"\.\s|\?\s|\!\s|\n",line):
+            if l:
+                domain_sentences.append(l)
+                
+                
+cvec = CountVectorizer(stop_words='english', min_df=3, max_df=0.5, ngram_range=(1,2))
+sf = cvec.fit_transform(domain_sentences)
+transformer = TfidfTransformer()
+transformed_weights = transformer.fit_transform(sf)
+weights = np.asarray(transformed_weights.mean(axis=0)).ravel().tolist()
+weights_df = pd.DataFrame({'term': cvec.get_feature_names(), 'weight': weights})
+#weights_df.sort_values(by='weight', ascending=False).head(15)
+domain_keywords = weights_df.sort_values(by='weight', ascending=False)
+domain_keywords = domain_keywords['term']
+domain_keywords = list(domain_keywords)
+
+#REMOVING KEYWORDS WHICH ARE NOT NEEDED
+
+irrelevant_words = ['team', 'goals', 'water', 'provide', 'use', 'conditions', 'earth', 'control', 'existing', 
+              'process', 'source','plan', 'code', 'needs','various', 'extensive', 'owners', 'loop', 
+              'new', 'fluid', 'includes', 'hot', 'hot water', 'post', 'owner', 'retro', 'summer',
+              'total','include', 'approach', 'open', 'state', 'natural', 'method', 'teams','provides', 
+              'programs', 'including', 'staff', 'data', 'life','offers', 'water', 'use', 'code',
+              'focus', 'options', 'closed','time', 'winter','net', 'air', 'sining', 'order', 
+              'indoor', 'making', 'space', 'required', 'future', 'means', 'work', 'stages', 
+              'house', 'order', 'offer', 'fully', 'art']
+
+for word in domain_keywords:
+    if word in irrelevant_words:
+        domain_keywords.remove(word)
+
+weights_df['weight'].mean()
+
+
+
+#description
+
+domain_sentences = list()
+domain_keywords = list()
+
+
+with open("C:\\Users\\satyanarayana.smriti\\Desktop\\RFP_Marketing\\doc_2.txt") as file:
+    for line in file:
+        for l in re.split(r"\.\s|\?\s|\!\s|\n",line):
+            if l:
+                domain_sentences.append(l)
+                
+                
+cvec = CountVectorizer(stop_words='english', ngram_range=(1,2))
+sf = cvec.fit_transform(domain_sentences)
+transformer = TfidfTransformer()
+transformed_weights = transformer.fit_transform(sf)
+weights = np.asarray(transformed_weights.mean(axis=0)).ravel().tolist()
+weights_df_1 = pd.DataFrame({'term': cvec.get_feature_names(), 'weight': weights})
+#weights_df.sort_values(by='weight', ascending=False).head(15)
+domain_keywords = weights_df_1.sort_values(by='weight', ascending=False)
+domain_keywords = domain_keywords['term']
+domain_keywords = list(domain_keywords)
+
+#REMOVING KEYWORDS WHICH ARE NOT NEEDED
+
+irrelevant_words = ['team', 'goals', 'water', 'provide', 'use', 'conditions', 'earth', 'control', 'existing', 
+              'process', 'source','plan', 'code', 'needs','various', 'extensive', 'owners', 'loop', 
+              'new', 'fluid', 'includes', 'hot', 'hot water', 'post', 'owner', 'retro', 'summer',
+              'total','include', 'approach', 'open', 'state', 'natural', 'method', 'teams','provides', 
+              'programs', 'including', 'staff', 'data', 'life','offers', 'water', 'use', 'code',
+              'focus', 'options', 'closed','time', 'winter','net', 'air', 'sining', 'order', 
+              'indoor', 'making', 'space', 'required', 'future', 'means', 'work', 'stages', 
+              'house', 'order', 'offer', 'fully', 'art']
+
+for word in domain_keywords:
+    if word in irrelevant_words:
+        domain_keywords.remove(word)
+        
+weights_df_1['weight'].mean()
+        
+  
+#domain +description
+
+domain_sentences = list()
+with open("C:\\Users\\satyanarayana.smriti\\Desktop\\RFP_Marketing\\master.txt") as file:
+    for line in file:
+        for l in re.split(r"\.\s|\?\s|\!\s|\n",line):
+            if l:
+                domain_sentences.append(l)
+                
+                
+cvec = CountVectorizer(stop_words='english', min_df=3, max_df=0.5, ngram_range=(1,2))
+sf = cvec.fit_transform(domain_sentences)
+transformer = TfidfTransformer()
+transformed_weights = transformer.fit_transform(sf)
+weights = np.asarray(transformed_weights.mean(axis=0)).ravel().tolist()
+weights_df_2 = pd.DataFrame({'term': cvec.get_feature_names(), 'weight': weights})
+#weights_df.sort_values(by='weight', ascending=False).head(15)
+domain_keywords = weights_df_2.sort_values(by='weight', ascending=False)
+domain_keywords = domain_keywords['term']
+domain_keywords = list(domain_keywords)
+
+#REMOVING KEYWORDS WHICH ARE NOT NEEDED
+
+irrelevant_words = ['team', 'goals', 'water', 'provide', 'use', 'conditions', 'earth', 'control', 'existing', 
+              'process', 'source','plan', 'code', 'needs','various', 'extensive', 'owners', 'loop', 
+              'new', 'fluid', 'includes', 'hot', 'hot water', 'post', 'owner', 'retro', 'summer',
+              'total','include', 'approach', 'open', 'state', 'natural', 'method', 'teams','provides', 
+              'programs', 'including', 'staff', 'data', 'life','offers', 'water', 'use', 'code',
+              'focus', 'options', 'closed','time', 'winter','net', 'air', 'sining', 'order', 
+              'indoor', 'making', 'space', 'required', 'future', 'means', 'work', 'stages', 
+              'house', 'order', 'offer', 'fully', 'art']
+
+for word in domain_keywords:
+    if word in irrelevant_words:
+        domain_keywords.remove(word)
+
+weights_df['weight'].mean()
+        
+weights_df_2['weight'].mean()
+
+      
+#reading every description from the excel file into a text file 
+path = "C:\\Users\\satyanarayana.smriti\\Desktop\\RFP_Marketing\\URL_Description.xlsx"
+description_df = pd.read_excel(path)
+sentence_for_documents = []
+
+#writing every row of the dataframe to a text document
+for i in range (len(description_df)):
+    path_to_write = "C:\\Users\\satyanarayana.smriti\\Desktop\\RFP_Marketing\\" + str(description_df.iloc[i,0]) + ".txt"
+#    print(path_to_write) 
+    with open(path_to_write, 'w') as output:
+#        print(str(df.iloc[j,1]))         
+        output.write(str(description_df.iloc[i,1]))
+        output.close()
+
+#READING EVERY TEXT FILE AND GIVING IT A SCORE BASED ON THE KEYWORDS' WEIGHT CALCULATED
+            
+for i in range (len(description_df)):
+    path_to_read = "C:\\Users\\satyanarayana.smriti\\Desktop\\RFP_Marketing\\" + str(description_df.iloc[i,0]) + ".txt"
+    with open(path_to_read, 'r') as output:
+        for line in output:
+            for l in re.split(r"\.\s|\?\s|\!\s|\n",line):
+                if l:
+                    sentence_for_documents.append(l) 
+                    cv = CountVectorizer(stop_words='english', ngram_range=(1,2))
+                    sf = cvec.fit_transform(sentence_for_documents)
+                    transformer = TfidfTransformer()
+                    transformed_weights = transformer.fit_transform(sf)
+                    weights = np.asarray(transformed_weights.mean(axis=0)).ravel().tolist()
+                    weights_df = pd.DataFrame({'term': cvec.get_feature_names(), 'weight': weights})
+                    #weights_df.sort_values(by='weight', ascending=False).head(15)
+                    keywords = weights_df.sort_values(by='weight', ascending=False)
+                    keywords = keywords['term']
+                    keywords = list(keywords)
+                    
+                    not_needed = ['team', 'goals', 'water', 'provide', 'use', 'conditions', 'earth', 'control', 'existing', 
+                                  'process', 'source','plan', 'code', 'needs','various', 'extensive', 'owners', 'loop', 
+                                  'new', 'fluid', 'includes', 'hot', 'hot water', 'post', 'owner', 'retro', 'summer',
+                                  'total','include', 'approach', 'open', 'state', 'natural', 'method', 'teams','provides', 
+                                  'programs', 'including', 'staff', 'data', 'life','offers', 'water', 'use', 'code',
+                                  'focus', 'options', 'closed','time', 'winter','net', 'air', 'sining', 'order', 
+                                  'indoor', 'making', 'space', 'required', 'future', 'means', 'work', 'stages', 
+                                  'house', 'order', 'offer', 'fully', 'art']
+
+                    for word in keywords:
+                        if word in not_needed:
+                            keywords.remove(word)
+                            
+                            weights_df['weight'].mean()
+        
+                    
+                    weights_for_domain = weights_for_domain[~weights_for_domain['Word'].isin(['team', 'goals', 'water', 
+                                          'provide', 'use', 'conditions', 'earth', 'control', 'existing', 
+                                          'process', 'source','plan', 'code', 'needs','various', 'extensive', 'owners', 'loop', 
+                                          'new', 'fluid', 'includes', 'hot', 'hot water', 'post', 'owner', 'retro', 'summer',
+                                          'total','include', 'approach', 'open', 'state', 'natural', 'method', 'teams','provides', 
+                                          'programs', 'including', 'staff', 'data', 'life','offers', 'water', 'use', 'code',
+                                          'focus', 'options', 'closed','time', 'winter','net', 'air', 'sining', 'order', 
+                                          'indoor', 'making', 'space', 'required', 'future', 'means', 'work', 'stages', 
+                                          'house', 'order', 'offer', 'fully', 'art'])]
+                        
+                        #find if these words are present in the domain specific keywords
+                        #finding mean of weights  
+                    weights_for_domain.loc[weights_for_domain['Word'].str.contains('|'.join(keywords), na=False)]
+                doc_1_mean  = weights_for_domain['Weight'].mean()
+        
+#assigning weights to domain knowledge
+      
+scored_docs = []
+     
+                                                                   
+path = "C:\\Users\\satyanarayana.smriti\\Desktop\\RFP_Marketing\\URL_Description.xlsx"
+df = pd.read_excel(path)
+weights_for_sentences = []
+for i in range (3):
+    path_to_write = "C:\\Users\\satyanarayana.smriti\\Desktop\\RFP_Marketing\\" + str(df.iloc[i,0]) + ".txt"
+    with open(path_to_write) as output:
+        for line in output:
+            for l in re.split(r"\.\s|\?\s|\!\s|\n",line):
+                if l:
+                    weights_for_sentences.append(l)
+                    for sentence in weights_for_sentences:
+#                        print(sentence + "\n")
+                        cv = CountVectorizer(stop_words='english', ngram_range=(1,2))
+                        # convert text data into term-frequency matrix
+                        data = cv.fit_transform(weights_for_sentences)
+                        tfidf_transformer = TfidfTransformer()
+                        # convert term-frequency matrix into tf-idf
+                        tfidf_matrix = tfidf_transformer.fit_transform(data)
+                        # create dictionary to find a tfidf word each word
+                        word2tfidf = dict(zip(cv.get_feature_names(), tfidf_transformer.idf_))
+                        
+                        #converting the dict named word2tfidf, to dataframe, and remove generic words
+                        for word, score in word2tfidf.items():
+#                            print(word, score)
+                            pd.DataFrame(word2tfidf.items())      
+                            weights_for_domain = pd.DataFrame(word2tfidf.items(), columns=['Word', 'Weight'])
+                        
+                            weights_for_domain = weights_for_domain[~weights_for_domain['Word'].isin(['team', 'goals', 'water', 
+                                          'provide', 'use', 'conditions', 'earth', 'control', 'existing', 
+                                          'process', 'source','plan', 'code', 'needs','various', 'extensive', 'owners', 'loop', 
+                                          'new', 'fluid', 'includes', 'hot', 'hot water', 'post', 'owner', 'retro', 'summer',
+                                          'total','include', 'approach', 'open', 'state', 'natural', 'method', 'teams','provides', 
+                                          'programs', 'including', 'staff', 'data', 'life','offers', 'water', 'use', 'code',
+                                          'focus', 'options', 'closed','time', 'winter','net', 'air', 'sining', 'order', 
+                                          'indoor', 'making', 'space', 'required', 'future', 'means', 'work', 'stages', 
+                                          'house', 'order', 'offer', 'fully', 'art'])]
+                        
+                        #find if these words are present in the domain specific keywords
+                        #finding mean of weights  
+                        weights_for_domain.loc[weights_for_domain['Word'].str.contains('|'.join(keywords), na=False)]
+                    doc_1_mean  = weights_for_domain['Weight'].mean()
+                scored_docs.append(doc_1_mean)
+                
+                path = "C:\\Users\\satyanarayana.smriti\\Desktop\\RFP_Marketing\\URL_Description.xlsx"
+                result = pd.read_excel(path)
+                print(result)
+#                text = ['val_1', 'val_2', 'val_3']     
+                result['score'] = scored_docs
+                print(result)
+                result.to_excel("C:\\Users\\satyanarayana.smriti\\Desktop\\RFP_Marketing\\scored_documents.xlsx", "Sheet1", index = False)
+
+
+
+##Using CSV 
+#import pandas as pd 
+#path = "C:\\Users\\satyanarayana.smriti\\Desktop\\RFP_Marketing\\URL_Description.csv"
+#result = pd.read_csv(path, encoding = 'cp1252')
+#print(result)
+#
+#text = ['val_1', 'val_2', 'val_3']     
+#result['score'] = text
+#print(result)
+#
+#
+#result.to_csv("C:\\Users\\satyanarayana.smriti\\Desktop\\RFP_Marketing\\random.csv" , index = False)
+
+#FOR EXCEL SHEET
+
+#from pandas import ExcelWriter
+#import openpyxl
+
+#to read excel file and add a new column that has scores of all descriptions, convert it back into an excel and store it as is
+import pandas as pd 
+path = "C:\\Users\\satyanarayana.smriti\\Desktop\\RFP_Marketing\\URL_Description.xlsx"
+result = pd.read_excel(path)
+print(result)
+text = ['val_1', 'val_2', 'val_3']     
+result['score'] = text
+print(result)
+result.to_excel("C:\\Users\\satyanarayana.smriti\\Desktop\\RFP_Marketing\\random_ONE.xlsx", "Sheet1", index = False)
+
+
+#read excel file that has multiple sheets
+#read the first sheet by default
+#get all the names of the sheets and map them to a dictionary of the respective sheet 
+
+import pandas as pd
+df = pd.read_excel('C:\\Users\\satyanarayana.smriti\\Desktop\\RFP_Marketing\\Website_to_Search_Updated.xlsx')
+# this will read the first sheet into df
+xls = pd.ExcelFile('C:\\Users\\satyanarayana.smriti\\Desktop\\RFP_Marketing\\Website_to_Search_Updated.xlsx')
+# Now you can list all sheets in the file
+xls.sheet_names
+file_name = "C:\\Users\\satyanarayana.smriti\\Desktop\\RFP_Marketing\\Website_to_Search_Updated.xlsx"
+# to read just one sheet to dataframe:
+df = pd.read_excel(file_name, sheetname="Daily")
+
+# to read all sheets to a map
+sheet_to_df_map = {}
+for sheet_name in xls.sheet_names:
+    sheet_to_df_map[sheet_name] = xls.parse(sheet_name)
+    
+sheet_to_df_map['Daily'] #dictionary, so use key to access that sheet
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+import re
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.feature_extraction.text import TfidfTransformer
+import numpy as np
+import pandas as pd
+
+#CREATING DOMAIN SPECIFIC KEYWORDS ends at domain_specific_keywords
+domain_sentences = list()
+with open("C:\\Users\\satyanarayana.smriti\\Desktop\\RFP_Marketing\\For_TF-IDF.txt") as file:
+    for line in file:
+        for l in re.split(r"\.\s|\?\s|\!\s|\n",line):
+            if l:
+                domain_sentences.append(l)
+                
+                
+cvec = CountVectorizer(stop_words='english', min_df=3, max_df=0.5, ngram_range=(1,2))
+sf = cvec.fit_transform(domain_sentences)
+transformer = TfidfTransformer()
+transformed_weights = transformer.fit_transform(sf)
+weights = np.asarray(transformed_weights.mean(axis=0)).ravel().tolist()
+weights_df = pd.DataFrame({'term': cvec.get_feature_names(), 'weight': weights})
+#weights_df.sort_values(by='weight', ascending=False).head(15)
+domain_keywords = weights_df.sort_values(by='weight', ascending=False)
+domain_keywords = domain_keywords['term']
+domain_keywords = list(domain_keywords)
+
+#REMOVING KEYWORDS WHICH ARE NOT NEEDED
+
+not_needed = ['team', 'goals', 'water', 'provide', 'use', 'conditions', 'earth', 'control', 'existing', 
+              'process', 'source','plan', 'code', 'needs','various', 'extensive', 'owners', 'loop', 
+              'new', 'fluid', 'includes', 'hot', 'hot water', 'post', 'owner', 'retro', 'summer',
+              'total','include', 'approach', 'open', 'state', 'natural', 'method', 'teams','provides', 
+              'programs', 'including', 'staff', 'data', 'life','offers', 'water', 'use', 'code',
+              'focus', 'options', 'closed','time', 'winter','net', 'air', 'sining', 'order', 
+              'indoor', 'making', 'space', 'required', 'future', 'means', 'work', 'stages', 
+              'house', 'order', 'offer', 'fully', 'art']
+
+for word in domain_keywords:
+    if word in not_needed:
+        domain_keywords.remove(word)
+        
+#reading every description of URL from Excel file into a text file 
+path = "C:\\Users\\satyanarayana.smriti\\Desktop\\RFP_Marketing\\URL_Description.xlsx"
+df = pd.read_excel(path)
+tokenized_sentences = []
+#    print(df)
+for i in range (3):
+    path_to_write = "C:\\Users\\satyanarayana.smriti\\Desktop\\RFP_Marketing\\" + str(df.iloc[i,0]) + ".txt"
+#    print(path_to_write) 
+    with open(path_to_write, 'w') as output:
+#        print(str(df.iloc[i,1]) + "\n")         
+        output.write(str(df.iloc[i,1]))
+        output.close()
+            #remove stop words from the sentences
+for i in range (3):
+    path_to_write = "C:\\Users\\satyanarayana.smriti\\Desktop\\RFP_Marketing\\" + str(df.iloc[i,0]) + ".txt"
+    with open(path_to_write, 'r') as output:
+        for line in output:
+            for l in re.split(r"\.\s|\?\s|\!\s|\n",line):
+                if l:
+                    tokenized_sentences.append(l)   
+        
+#assigning weights to domain knowledge
+      
+scored_document = []
+                                                                        
+path = "C:\\Users\\satyanarayana.smriti\\Desktop\\RFP_Marketing\\URL_Description.xlsx"
+df = pd.read_excel(path)
+weights_for_sentences = []
+for i in range (3):
+    path_to_write = "C:\\Users\\satyanarayana.smriti\\Desktop\\RFP_Marketing\\" + str(df.iloc[i,0]) + ".txt"
+    with open(path_to_write) as output:
+        for line in output:
+            for l in re.split(r"\?\s|\!\s|\n",line):
+                if l:
+                    weights_for_sentences.append(l)
+                    for sentence in weights_for_sentences:
+#                        print(sentence + "\n")
+                        cv = CountVectorizer(stop_words='english', ngram_range=(1,2))
+                        # convert text data into term-frequency matrix
+                        data = cv.fit_transform(weights_for_sentences)
+                        tfidf_transformer = TfidfTransformer()
+                        # convert term-frequency matrix into tf-idf
+                        tfidf_matrix = tfidf_transformer.fit_transform(data)
+                        # create dictionary to find a tfidf word each word
+                        word2tfidf = dict(zip(cv.get_feature_names(), tfidf_transformer.idf_))
+                        
+                        #converting the dict named word2tfidf, to dataframe, and remove generic words
+                        for word, score in word2tfidf.items():
+#                            print(word, score)
+                            pd.DataFrame(word2tfidf.items())      
+                            weights_for_domain = pd.DataFrame(word2tfidf.items(), columns=['Word', 'Weight'])
+                        
+                            weights_for_domain = weights_for_domain[~weights_for_domain['Word'].isin(['team', 'goals', 'water', 
+                                          'provide', 'use', 'conditions', 'earth', 'control', 'existing', 
+                                          'process', 'source','plan', 'code', 'needs','various', 'extensive', 'owners', 'loop', 
+                                          'new', 'fluid', 'includes', 'hot', 'hot water', 'post', 'owner', 'retro', 'summer',
+                                          'total','include', 'approach', 'open', 'state', 'natural', 'method', 'teams','provides', 
+                                          'programs', 'including', 'staff', 'data', 'life','offers', 'water', 'use', 'code',
+                                          'focus', 'options', 'closed','time', 'winter','net', 'air', 'sining', 'order', 
+                                          'indoor', 'making', 'space', 'required', 'future', 'means', 'work', 'stages', 
+                                          'house', 'order', 'offer', 'fully', 'art', 'work', 'year', 'pay', 'prove', 'purchase',
+                                          'single'])]
+                        
+                        #find if these words are present in the domain specific keywords
+                        #finding mean of weights  
+                        weights_for_domain.loc[weights_for_domain['Word'].str.contains('|'.join(domain_keywords), na=False)]
+                    doc_1_mean  = weights_for_domain['Weight'].mean()
+                scored_document.append(doc_1_mean)
+                
+                path = "C:\\Users\\satyanarayana.smriti\\Desktop\\RFP_Marketing\\URL_Description.xlsx"
+                result = pd.read_excel(path)
+                print(result)
+                result['score'] = scored_document
+                print(result)
+                result.to_excel("C:\\Users\\satyanarayana.smriti\\Desktop\\RFP_Marketing\\scored_documents.xlsx", "Sheet1", index = False)
+
+
+
+
+
+sentence_for_documents = []
+
+path_to_write = "C:\\Users\\satyanarayana.smriti\\Desktop\\RFP_Marketing\\doc_3.txt"
+with open(path_to_write, 'r') as output:
+    for line in output:
+        for l in re.split(r"\.\s|\?\s|\!\s|\n",line):
+            if l:
+                sentence_for_documents.append(l)  
+
+scored_docs = []
+weights_for_sentences = []
+path_to_write = "C:\\Users\\satyanarayana.smriti\\Desktop\\RFP_Marketing\\doc_4.txt"
+with open(path_to_write) as output:
+    for line in output:
+        for l in re.split(r"\?\s|\!\s|\n",line):
+            if l:
+                weights_for_sentences.append(l)
+                for sentence in weights_for_sentences:
+                    print(sentence + "\n")
+                    cv = CountVectorizer(stop_words='english', ngram_range=(1,2))
+                # convert text data into term-frequency matrix
+                    data = cv.fit_transform(weights_for_sentences)
+                    tfidf_transformer = TfidfTransformer()
+                    # convert term-frequency matrix into tf-idf
+                    tfidf_matrix = tfidf_transformer.fit_transform(data)
+                    # create dictionary to find a tfidf word each word
+                    word2tfidf = dict(zip(cv.get_feature_names(), tfidf_transformer.idf_))
+                        
+                        #converting the dict named word2tfidf, to dataframe, and remove generic words
+                    for word, score in word2tfidf.items():
+#                        print(word, score)
+                        pd.DataFrame(word2tfidf.items())      
+                        weights_for_domain = pd.DataFrame(word2tfidf.items(), columns=['Word', 'Weight'])
+                        
+                        weights_for_domain = weights_for_domain[~weights_for_domain['Word'].isin(['team', 'goals', 'water', 
+                                          'provide', 'use', 'conditions', 'earth', 'control', 'existing', 
+                                          'process', 'source','plan', 'code', 'needs','various', 'extensive', 'owners', 'loop', 
+                                          'new', 'fluid', 'includes', 'hot', 'hot water', 'post', 'owner', 'retro', 'summer',
+                                          'total','include', 'approach', 'open', 'state', 'natural', 'method', 'teams','provides', 
+                                          'programs', 'including', 'staff', 'data', 'life','offers', 'water', 'use', 'code',
+                                          'focus', 'options', 'closed','time', 'winter','net', 'air', 'sining', 'order', 
+                                          'indoor', 'making', 'space', 'required', 'future', 'means', 'work', 'stages', 
+                                          'house', 'order', 'offer', 'fully', 'art', 'work', 'year'])]
+                        
+                        #find if these words are present in the domain specific keywords
+                        #finding mean of weights  
+                        weights_for_domain.loc[weights_for_domain['Word'].str.contains('|'.join(domain_keywords), na=False)]
+                    doc_1_mean  = weights_for_domain['Weight'].mean()
+                scored_docs.append(doc_1_mean)
+
+
+scored_docs = []
+
+path_to_read = "C:\\Users\\satyanarayana.smriti\\Desktop\\RFP_Marketing\\doc_3.txt"
+with open(path_to_read, 'r') as output:
+    for line in output:
+        for l in re.split(r"\.\s|\?\s|\!\s|\n",line):
+            if l:
+                sentence_for_documents.append(l) 
+                cv = CountVectorizer(stop_words='english', ngram_range=(1,2))
+                sf = cvec.fit_transform(sentence_for_documents)
+                transformer = TfidfTransformer()
+                transformed_weights = transformer.fit_transform(sf)
+                weights = np.asarray(transformed_weights.mean(axis=0)).ravel().tolist()
+                weights_df = pd.DataFrame({'term': cvec.get_feature_names(), 'weight': weights})
+                #weights_df.sort_values(by='weight', ascending=False).head(15)
+                keywords = weights_df.sort_values(by='weight', ascending=False)
+                keywords = keywords['term']
+                keywords = list(keywords)
+                    
+                not_needed = ['team', 'goals', 'water', 'provide', 'use', 'conditions', 'earth', 'control', 'existing', 
+                                  'process', 'source','plan', 'code', 'needs','various', 'extensive', 'owners', 'loop', 
+                                  'new', 'fluid', 'includes', 'hot', 'hot water', 'post', 'owner', 'retro', 'summer',
+                                  'total','include', 'approach', 'open', 'state', 'natural', 'method', 'teams','provides', 
+                                  'programs', 'including', 'staff', 'data', 'life','offers', 'water', 'use', 'code',
+                                  'focus', 'options', 'closed','time', 'winter','net', 'air', 'sining', 'order', 
+                                  'indoor', 'making', 'space', 'required', 'future', 'means', 'work', 'stages', 
+                                  'house', 'order', 'offer', 'fully', 'art']
+
+                for word in keywords:
+                    if word in not_needed:
+                        keywords.remove(word)
+                            
+    a = weights_df['weight'].mean()
+    print(a)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+import re
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.feature_extraction.text import TfidfTransformer
+import numpy as np
+import pandas as pd
+
+#CREATING DOMAIN SPECIFIC KEYWORDS ends at domain_specific_keywords
+sentences = list()
+with open("C:\\Users\\satyanarayana.smriti\\Desktop\\RFP_Marketing\\For_TF-IDF.txt") as file:
+    for line in file:
+        for l in re.split(r"\.\s|\?\s|\!\s|\n",line):
+            if l:
+                sentences.append(l)
+                
+                
+cvec = CountVectorizer(stop_words='english', min_df=3, max_df=0.5, ngram_range=(1,2))
+sf = cvec.fit_transform(sentences)
+transformer = TfidfTransformer()
+transformed_weights = transformer.fit_transform(sf)
+weights = np.asarray(transformed_weights.mean(axis=0)).ravel().tolist()
+weights_df = pd.DataFrame({'term': cvec.get_feature_names(), 'weight': weights})
+#weights_df.sort_values(by='weight', ascending=False).head(15)
+keywords = weights_df.sort_values(by='weight', ascending=False)
+keywords = keywords['term']
+keywords = list(keywords)
+
+#REMOVING KEYWORDS WHICH ARE NOT NEEDED
+
+not_needed = ['team', 'goals', 'water', 'provide', 'use', 'conditions', 'earth', 'control', 'existing', 
+              'process', 'source','plan', 'code', 'needs','various', 'extensive', 'owners', 'loop', 
+              'new', 'fluid', 'includes', 'hot', 'hot water', 'post', 'owner', 'retro', 'summer',
+              'total','include', 'approach', 'open', 'state', 'natural', 'method', 'teams','provides', 
+              'programs', 'including', 'staff', 'data', 'life','offers', 'water', 'use', 'code',
+              'focus', 'options', 'closed','time', 'winter','net', 'air', 'sining', 'order', 
+              'indoor', 'making', 'space', 'required', 'future', 'means', 'work', 'stages', 
+              'house', 'order', 'offer', 'fully', 'art']
+
+for word in keywords:
+    if word in not_needed:
+        keywords.remove(word)
+        
+domain_specific_keywords = keywords
+
+#reading every description from CSV file into a text file 
+path = "C:\\Users\\satyanarayana.smriti\\Desktop\\RFP_Marketing\\URL_Description.xlsx"
+df = pd.read_excel(path)
+sentence_for_documents = []
+#    print(df)
+for i in range (3):
+    path_to_write = "C:\\Users\\satyanarayana.smriti\\Desktop\\RFP_Marketing\\" + str(df.iloc[i,0]) + ".txt"
+#    print(path_to_write) 
+    with open(path_to_write, 'w') as output:
+#        print(str(df.iloc[j,1]))         
+        output.write(str(df.iloc[i,1]))
+        output.close()
+            #remove stop words from the sentences
+for i in range (3):
+    path_to_write = "C:\\Users\\satyanarayana.smriti\\Desktop\\RFP_Marketing\\" + str(df.iloc[i,0]) + ".txt"
+    with open(path_to_write, 'r') as output:
+        for line in output:
+            for l in re.split(r"\.\s|\?\s|\!\s|\n",line):
+                if l:
+                    sentence_for_documents.append(l)   
+        
+#assigning weights to domain knowledge
+      
+scored_docs = []
+                                                                        
+path = "C:\\Users\\satyanarayana.smriti\\Desktop\\RFP_Marketing\\URL_Description.xlsx"
+df = pd.read_excel(path)
+weights_for_sentences = []
+for i in range (3):
+    path_to_write = "C:\\Users\\satyanarayana.smriti\\Desktop\\RFP_Marketing\\" + str(df.iloc[i,0]) + ".txt"
+    with open(path_to_write) as output:
+        for line in output:
+            for l in re.split(r"\?\s|\!\s|\n",line):
+                if l:
+                    weights_for_sentences.append(l)
+                    for sentence in weights_for_sentences:
+#                        print(sentence + "\n")
+                        cv = CountVectorizer(stop_words='english', ngram_range=(1,2))
+                        # convert text data into term-frequency matrix
+                        data = cv.fit_transform(weights_for_sentences)
+                        tfidf_transformer = TfidfTransformer()
+                        # convert term-frequency matrix into tf-idf
+                        tfidf_matrix = tfidf_transformer.fit_transform(data)
+                        # create dictionary to find a tfidf word each word
+                        word2tfidf = dict(zip(cv.get_feature_names(), tfidf_transformer.idf_))
+                        
+                        #converting the dict named word2tfidf, to dataframe, and remove generic words
+                        for word, score in word2tfidf.items():
+#                            print(word, score)
+                            pd.DataFrame(word2tfidf.items())      
+                            weights_for_domain = pd.DataFrame(word2tfidf.items(), columns=['Word', 'Weight'])
+                        
+                            weights_for_domain = weights_for_domain[~weights_for_domain['Word'].isin(['team', 'goals', 'water', 
+                                          'provide', 'use', 'conditions', 'earth', 'control', 'existing', 
+                                          'process', 'source','plan', 'code', 'needs','various', 'extensive', 'owners', 'loop', 
+                                          'new', 'fluid', 'includes', 'hot', 'hot water', 'post', 'owner', 'retro', 'summer',
+                                          'total','include', 'approach', 'open', 'state', 'natural', 'method', 'teams','provides', 
+                                          'programs', 'including', 'staff', 'data', 'life','offers', 'water', 'use', 'code',
+                                          'focus', 'options', 'closed','time', 'winter','net', 'air', 'sining', 'order', 
+                                          'indoor', 'making', 'space', 'required', 'future', 'means', 'work', 'stages', 
+                                          'house', 'order', 'offer', 'fully', 'art'])]
+                        
+                        #find if these words are present in the domain specific keywords
+                        #finding mean of weights  
+                        weights_for_domain.loc[weights_for_domain['Word'].str.contains('|'.join(keywords), na=False)]
+                    doc_1_mean  = weights_for_domain['Weight'].mean()
+                scored_docs.append(doc_1_mean)
+                
+                path = "C:\\Users\\satyanarayana.smriti\\Desktop\\RFP_Marketing\\URL_Description.xlsx"
+                result = pd.read_excel(path)
+                print(result)
+#                text = ['val_1', 'val_2', 'val_3']     
+                result['score'] = scored_docs
+                print(result)
+                result.to_excel("C:\\Users\\satyanarayana.smriti\\Desktop\\RFP_Marketing\\scored_documents.xlsx", "Sheet1", index = False)
+
+
+
+##Using CSV 
+#import pandas as pd 
+#path = "C:\\Users\\satyanarayana.smriti\\Desktop\\RFP_Marketing\\URL_Description.csv"
+#result = pd.read_csv(path, encoding = 'cp1252')
+#print(result)
+#
+#text = ['val_1', 'val_2', 'val_3']     
+#result['score'] = text
+#print(result)
+#
+#
+#result.to_csv("C:\\Users\\satyanarayana.smriti\\Desktop\\RFP_Marketing\\random.csv" , index = False)
+
+#FOR EXCEL SHEET
+
+#from pandas import ExcelWriter
+#import openpyxl
+
+#to read excel file and add a new column that has scores of all descriptions, convert it back into an excel and store it as is
+import pandas as pd 
+path = "C:\\Users\\satyanarayana.smriti\\Desktop\\RFP_Marketing\\URL_Description.xlsx"
+result = pd.read_excel(path)
+print(result)
+text = ['val_1', 'val_2', 'val_3']     
+result['score'] = text
+print(result)
+result.to_excel("C:\\Users\\satyanarayana.smriti\\Desktop\\RFP_Marketing\\random_ONE.xlsx", "Sheet1", index = False)
+
+
+#read excel file that has multiple sheets
+#read the first sheet by default
+#get all the names of the sheets and map them to a dictionary of the respective sheet 
+
+import pandas as pd
+df = pd.read_excel('C:\\Users\\satyanarayana.smriti\\Desktop\\RFP_Marketing\\Website_to_Search_Updated.xlsx')
+# this will read the first sheet into df
+xls = pd.ExcelFile('C:\\Users\\satyanarayana.smriti\\Desktop\\RFP_Marketing\\Website_to_Search_Updated.xlsx')
+# Now you can list all sheets in the file
+xls.sheet_names
+file_name = "C:\\Users\\satyanarayana.smriti\\Desktop\\RFP_Marketing\\Website_to_Search_Updated.xlsx"
+# to read just one sheet to dataframe:
+df = pd.read_excel(file_name, sheetname="Daily")
+
+# to read all sheets to a map
+sheet_to_df_map = {}
+for sheet_name in xls.sheet_names:
+    sheet_to_df_map[sheet_name] = xls.parse(sheet_name)
+    
+sheet_to_df_map['Daily'] #dictionary, so use key to access that sheet
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
