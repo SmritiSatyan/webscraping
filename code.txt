@@ -8,7 +8,7 @@ import pandas as pd
 #domain
 #CREATING DOMAIN SPECIFIC KEYWORDS ends at domain_specific_keywords
 domain_sentences = list()
-with open("C:\\Users\\satyanarayana.smriti\\Desktop\\RFP_Marketing\\For_TF-IDF.txt") as file:
+with open("path to .txt") as file:
     for line in file:
         for l in re.split(r"\.\s|\?\s|\!\s|\n",line):
             if l:
@@ -43,15 +43,13 @@ for word in domain_keywords:
 
 weights_df['weight'].mean()
 
-
-
 #description
 
 domain_sentences = list()
 domain_keywords = list()
 
 
-with open("C:\\Users\\satyanarayana.smriti\\Desktop\\RFP_Marketing\\doc_2.txt") as file:
+with open("removing unwanted text") as file:
     for line in file:
         for l in re.split(r"\.\s|\?\s|\!\s|\n",line):
             if l:
@@ -69,17 +67,6 @@ domain_keywords = weights_df_1.sort_values(by='weight', ascending=False)
 domain_keywords = domain_keywords['term']
 domain_keywords = list(domain_keywords)
 
-#REMOVING KEYWORDS WHICH ARE NOT NEEDED
-
-irrelevant_words = ['team', 'goals', 'water', 'provide', 'use', 'conditions', 'earth', 'control', 'existing', 
-              'process', 'source','plan', 'code', 'needs','various', 'extensive', 'owners', 'loop', 
-              'new', 'fluid', 'includes', 'hot', 'hot water', 'post', 'owner', 'retro', 'summer',
-              'total','include', 'approach', 'open', 'state', 'natural', 'method', 'teams','provides', 
-              'programs', 'including', 'staff', 'data', 'life','offers', 'water', 'use', 'code',
-              'focus', 'options', 'closed','time', 'winter','net', 'air', 'sining', 'order', 
-              'indoor', 'making', 'space', 'required', 'future', 'means', 'work', 'stages', 
-              'house', 'order', 'offer', 'fully', 'art']
-
 for word in domain_keywords:
     if word in irrelevant_words:
         domain_keywords.remove(word)
@@ -90,7 +77,7 @@ weights_df_1['weight'].mean()
 #domain +description
 
 domain_sentences = list()
-with open("C:\\Users\\satyanarayana.smriti\\Desktop\\RFP_Marketing\\master.txt") as file:
+with open("knowledge base text") as file:
     for line in file:
         for l in re.split(r"\.\s|\?\s|\!\s|\n",line):
             if l:
@@ -108,17 +95,6 @@ domain_keywords = weights_df_2.sort_values(by='weight', ascending=False)
 domain_keywords = domain_keywords['term']
 domain_keywords = list(domain_keywords)
 
-#REMOVING KEYWORDS WHICH ARE NOT NEEDED
-
-irrelevant_words = ['team', 'goals', 'water', 'provide', 'use', 'conditions', 'earth', 'control', 'existing', 
-              'process', 'source','plan', 'code', 'needs','various', 'extensive', 'owners', 'loop', 
-              'new', 'fluid', 'includes', 'hot', 'hot water', 'post', 'owner', 'retro', 'summer',
-              'total','include', 'approach', 'open', 'state', 'natural', 'method', 'teams','provides', 
-              'programs', 'including', 'staff', 'data', 'life','offers', 'water', 'use', 'code',
-              'focus', 'options', 'closed','time', 'winter','net', 'air', 'sining', 'order', 
-              'indoor', 'making', 'space', 'required', 'future', 'means', 'work', 'stages', 
-              'house', 'order', 'offer', 'fully', 'art']
-
 for word in domain_keywords:
     if word in irrelevant_words:
         domain_keywords.remove(word)
@@ -129,13 +105,13 @@ weights_df_2['weight'].mean()
 
       
 #reading every description from the excel file into a text file 
-path = "C:\\Users\\satyanarayana.smriti\\Desktop\\RFP_Marketing\\URL_Description.xlsx"
+path = "path to .xlsx"
 description_df = pd.read_excel(path)
 sentence_for_documents = []
 
 #writing every row of the dataframe to a text document
 for i in range (len(description_df)):
-    path_to_write = "C:\\Users\\satyanarayana.smriti\\Desktop\\RFP_Marketing\\" + str(description_df.iloc[i,0]) + ".txt"
+    path_to_write = "path\\" + str(description_df.iloc[i,0]) + ".txt"
 #    print(path_to_write) 
     with open(path_to_write, 'w') as output:
 #        print(str(df.iloc[j,1]))         
@@ -145,7 +121,7 @@ for i in range (len(description_df)):
 #READING EVERY TEXT FILE AND GIVING IT A SCORE BASED ON THE KEYWORDS' WEIGHT CALCULATED
             
 for i in range (len(description_df)):
-    path_to_read = "C:\\Users\\satyanarayana.smriti\\Desktop\\RFP_Marketing\\" + str(description_df.iloc[i,0]) + ".txt"
+    path_to_read = "path\\" + str(description_df.iloc[i,0]) + ".txt"
     with open(path_to_read, 'r') as output:
         for line in output:
             for l in re.split(r"\.\s|\?\s|\!\s|\n",line):
@@ -198,11 +174,11 @@ for i in range (len(description_df)):
 scored_docs = []
      
                                                                    
-path = "C:\\Users\\satyanarayana.smriti\\Desktop\\RFP_Marketing\\URL_Description.xlsx"
+path = "path to .xlsx"
 df = pd.read_excel(path)
 weights_for_sentences = []
 for i in range (3):
-    path_to_write = "C:\\Users\\satyanarayana.smriti\\Desktop\\RFP_Marketing\\" + str(df.iloc[i,0]) + ".txt"
+    path_to_write = "path\\" + str(df.iloc[i,0]) + ".txt"
     with open(path_to_write) as output:
         for line in output:
             for l in re.split(r"\.\s|\?\s|\!\s|\n",line):
@@ -241,28 +217,15 @@ for i in range (3):
                     doc_1_mean  = weights_for_domain['Weight'].mean()
                 scored_docs.append(doc_1_mean)
                 
-                path = "C:\\Users\\satyanarayana.smriti\\Desktop\\RFP_Marketing\\URL_Description.xlsx"
+                path = "path to .xlsx"
                 result = pd.read_excel(path)
                 print(result)
 #                text = ['val_1', 'val_2', 'val_3']     
                 result['score'] = scored_docs
                 print(result)
-                result.to_excel("C:\\Users\\satyanarayana.smriti\\Desktop\\RFP_Marketing\\scored_documents.xlsx", "Sheet1", index = False)
+                result.to_excel("path to .xlsx", "Sheet1", index = False)
 
 
-
-##Using CSV 
-#import pandas as pd 
-#path = "C:\\Users\\satyanarayana.smriti\\Desktop\\RFP_Marketing\\URL_Description.csv"
-#result = pd.read_csv(path, encoding = 'cp1252')
-#print(result)
-#
-#text = ['val_1', 'val_2', 'val_3']     
-#result['score'] = text
-#print(result)
-#
-#
-#result.to_csv("C:\\Users\\satyanarayana.smriti\\Desktop\\RFP_Marketing\\random.csv" , index = False)
 
 #FOR EXCEL SHEET
 
@@ -271,13 +234,13 @@ for i in range (3):
 
 #to read excel file and add a new column that has scores of all descriptions, convert it back into an excel and store it as is
 import pandas as pd 
-path = "C:\\Users\\satyanarayana.smriti\\Desktop\\RFP_Marketing\\URL_Description.xlsx"
+path = "path to .xlsx"
 result = pd.read_excel(path)
 print(result)
 text = ['val_1', 'val_2', 'val_3']     
 result['score'] = text
 print(result)
-result.to_excel("C:\\Users\\satyanarayana.smriti\\Desktop\\RFP_Marketing\\random_ONE.xlsx", "Sheet1", index = False)
+result.to_excel("path to .xlsx", "Sheet1", index = False)
 
 
 #read excel file that has multiple sheets
@@ -285,12 +248,12 @@ result.to_excel("C:\\Users\\satyanarayana.smriti\\Desktop\\RFP_Marketing\\random
 #get all the names of the sheets and map them to a dictionary of the respective sheet 
 
 import pandas as pd
-df = pd.read_excel('C:\\Users\\satyanarayana.smriti\\Desktop\\RFP_Marketing\\Website_to_Search_Updated.xlsx')
+df = pd.read_excel('path to .xlsx')
 # this will read the first sheet into df
-xls = pd.ExcelFile('C:\\Users\\satyanarayana.smriti\\Desktop\\RFP_Marketing\\Website_to_Search_Updated.xlsx')
+xls = pd.ExcelFile('path to .xlsx')
 # Now you can list all sheets in the file
 xls.sheet_names
-file_name = "C:\\Users\\satyanarayana.smriti\\Desktop\\RFP_Marketing\\Website_to_Search_Updated.xlsx"
+file_name = "path to .xlsx"
 # to read just one sheet to dataframe:
 df = pd.read_excel(file_name, sheetname="Daily")
 
